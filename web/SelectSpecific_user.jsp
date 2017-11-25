@@ -13,26 +13,24 @@
         <title>JSP Page</title>
                          <script>
   
- function trim(s) 
+function myFunction() {
+    var usename = document.getElementById("usename").value;
+    
+    submitOK = "true";
+
+    if (usename.length > 20) {
+        alert("The username may have no more than 20 characters");
+        submitOK = "false";
+    } 
+    if(usename === "")
     {
-        return s.replace( /^s*/, "" ).replace( /s*$/, "" );
+        alert("The username must not be null");
+        submitOK = "false";
     }
-    function validate()
-    {
-        
-        if(trim(document.myform.username.value)==="")
-        {
-          alert("Text empty");
-          document.myform.username.focus();
-          return false;
-        }//else if (trim(document.myform.afm.value)===^[A-Za-z]+$)
-         //{
-         //    alert("PLEASE ENTER ONLY NUMS");
-         //    document.myform.afm.focus();
-         //    return false;
-        // }
-          
-       }  
+     if (submitOK === "false") {
+        return false;
+    }
+}
 </script>
         <style>
             a:link, a:visited 
@@ -69,7 +67,7 @@
     <body>
         
         <h1>Search users by username</h1>
-        <form name="myform" action="Display_User_from_username.jsp" method="POST" onSubmit="return validate();">
+        <form name="myform" action="Display_User_from_username.jsp" method="POST" onSubmit="return myFunction();">
         <div class="w3-container">
             <table class="w3-table-all w3-centered">
             
@@ -77,7 +75,7 @@
                 <tr>
                     <td>
                         <span class="w3-tag">USERNAME :</span>
-                         <input type="text" name="username" value="" />
+                         <input id="usename" type="text" name="username" value="" />
                     </td>
                 
                 </tr>
@@ -95,5 +93,6 @@
         </table>
         </div>    
         </form>
+        <a href="main.jsp">Go back</a>
     </body>
 </html>

@@ -11,28 +11,30 @@
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Business</title>
-                 <script>
-  
- function trim(s) 
-    {
-        return s.replace( /^s*/, "" ).replace( /s*$/, "" );
+<script>
+   function myFunction() {
+    var AFM = document.getElementById("AFM").value;
+    
+    submitOK = "true";
+
+    if (AFM.length > 9) {
+        alert("The AFM may have no more than 9 characters");
+        submitOK = "false";
+    } 
+
+    if (isNaN(AFM)){
+        alert("The AFM must be a number");
+        submitOK = "false";
     }
-    function validate()
+    if(AFM === "")
     {
-        
-        if(trim(document.myform.afm.value)==="")
-        {
-          alert("AFM empty");
-          document.myform.afm.focus();
-          return false;
-        }//else if (trim(document.myform.afm.value)===^[A-Za-z]+$)
-         //{
-         //    alert("PLEASE ENTER ONLY NUMS");
-         //    document.myform.afm.focus();
-         //    return false;
-        // }
-          
-       }  
+        alert("The AFM must not be null");
+        submitOK = "false";
+    }
+     if (submitOK === "false") {
+        return false;
+    }
+}
 </script>
         <style>
             a:link, a:visited 
@@ -68,7 +70,7 @@
     </head>
     <body>
         <h1>Search Business from afm</h1>
-        <form name="myform" action="Display_Business_from_afm.jsp" method="POST" onSubmit="return validate();">
+        <form name="myform" action="Display_Business_from_afm.jsp" method="POST" onSubmit="return myFunction();">
         <div class="w3-container">
             <table class="w3-table-all w3-centered">
             
@@ -76,7 +78,7 @@
                 <tr>
                     <td>
                         <span class="w3-tag">AFM</span>
-                         <input type="text" name="afm" value="" />
+                         <input id="AFM"  type="text" name="afm" value="" />
                     </td>
                 
                 </tr>

@@ -122,7 +122,7 @@
                     <td>name:</td>
                     <td>owner:</td>
                     <td>afm:</td>
-                    <td>verified:</td>
+                    <td>verified (0=NO 1=YES ):</td>
                 </tr>
                 <% while(business.next())
                     { %>
@@ -135,7 +135,7 @@
                     <td><%= business.getString("name")%>   </td>
                     <td><%= business.getString("owner")%>   </td>
                     <td><%= business.getString("afm")%>   </td>
-                    <td><%= business.getByte("verified")%></td>
+                    <td><%= business.getByte("verified")%> </td>
                     
                    
                 </tr>
