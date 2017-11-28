@@ -1,17 +1,19 @@
 <%-- 
-    Document   : main
-    Created on : 21 Νοε 2017, 8:57:31 πμ
+    Document   : Display_Business_Not_Verified
+    Created on : 28 Νοε 2017, 1:29:47 μμ
     Author     : evimouth
 --%>
-<%@page import="java.sql.*"%>
-<% Class.forName("com.mysql.jdbc.Driver"); %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%@page import="java.sql.*"%>
+<% Class.forName("com.mysql.jdbc.Driver"); %>
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>USERS</title>
+        <title>JSP Page</title>
+        
         <style>
                 #customers 
                 {
@@ -38,6 +40,7 @@
                     background-color: #4CAF50;
                     color: white;
                 }
+                
         </style>
         <style>
             a:link, a:visited 
@@ -56,13 +59,10 @@
                 background-color: red;
             }
         </style>
-
     </head>
     <body>
-
-        <h1>USERS</h1>
         <%!
-            public class users_class
+            public class verified_class
                 {
                     String URL ="jdbc:mysql://localhost:3306/goldenoffers_data";
                     String USERNAME="manosm";
@@ -71,13 +71,18 @@
                     PreparedStatement prest = null;
                     ResultSet res = null;
                     
-                    public users_class()
+                    public verified_class()
                         {
                             try
                                 {
                                     connection= DriverManager.getConnection(URL,USERNAME,PASSWORD);
                                     
-                                    prest = connection.prepareStatement("Select id,username,email from users");
+                                    prest = connection.prepareStatement
+                                        (
+                                            
+                                            "Select id,unique_id,email,created_at,updated_at,name,owner,afm,verified from business WHERE verified like 0 ORDER BY id "
+
+                                        );
                                     
                                 }
                             catch(SQLException e)
@@ -86,8 +91,7 @@
                             }
                             
                         }
-                        
-                    public ResultSet getusers()
+                    public ResultSet getnotverified()
                     {
                         try
                                 {
@@ -102,32 +106,45 @@
                         
                         return res;
                     }
-                    
                 }
         %>
         <%
-            users_class users_class= new users_class();
-            ResultSet users = users_class.getusers();
-            
+            verified_class business_class= new verified_class();
+            ResultSet verified = business_class.getnotverified();
         %>
-        <table id="customers" border="1">
+        <table id="customers" border="2">
             <tbody>
-                <tr>
-                    <td>User id:</td>
-                    <td>Username:</td>
-                    <td>Email:</td>
+                <tr align="center">
+                    <td>id:</td>
+                    <td>unique_id:</td>
+                    <td>email:</td>
+                    <td>created_at:</td>
+                    <td>updated_at:</td>
+                    <td>name:</td>
+                    <td>owner:</td>
+                    <td>afm:</td>
+                    <td>verified</td>
                 </tr>
-                <% while(users.next())
+                <% while(verified.next())
                     { %>
                 <tr>
-                    <td><%= users.getInt("id")%></td>
-                    <td><%= users.getString("username")%></td>
-                    <td><%= users.getString("email")%></td>
+                    <td><%= verified.getInt("id")%>    </td>
+                    <td><%= verified.getString("unique_id")%>   </td>
+                    <td><%= verified.getString("email")%>   </td>
+                    <td><%= verified.getTimestamp ("created_at")%>   </td>
+                    <td><%= verified.getTimestamp ("updated_at")%>   </td>
+                    <td><%= verified.getString("name")%>   </td>
+                    <td><%= verified.getString("owner")%>   </td>
+                    <td><%= verified.getString("afm")%>   </td>
+                    <td><%= verified.getByte("verified")%> </td>
+                    
+                   
                 </tr>
                 <%}%>
             </tbody>
-            <a href="main.jsp">Go back</a>
-            <a href="Deleteuser.jsp">Go delete a user</a>
         </table>
+            
+            <a href="main.jsp">Go back</a>
+       
     </body>
 </html>

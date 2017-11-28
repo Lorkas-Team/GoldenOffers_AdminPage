@@ -14,26 +14,14 @@
 <script>
    function myFunction() {
     var AFM = document.getElementById("AFM").value;
-    
-    submitOK = "true";
+ 
 
-    if (AFM.length > 9) {
-        alert("The AFM may have no more than 9 characters");
-        submitOK = "false";
+    if (AFM.length !== 9 || isNaN(AFM)) {
+        alert("The AFM must be 9 numbers");
+        return false;
     } 
 
-    if (isNaN(AFM)){
-        alert("The AFM must be a number");
-        submitOK = "false";
-    }
-    if(AFM === "")
-    {
-        alert("The AFM must not be null");
-        submitOK = "false";
-    }
-     if (submitOK === "false") {
-        return false;
-    }
+
 }
 </script>
         <style>

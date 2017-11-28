@@ -37,6 +37,7 @@
                   <a href="offers.jsp">Offers view</a>
                   <a href="SelectSpecific.jsp">Search Business from AFM </a>
                   <a href="SelectSpecific_user.jsp">Search Users from username </a>
+                  <a href="Display_Business_Not_Verified.jsp">Business where not verified</a>
             </ul>  
 
         </center>

@@ -1,18 +1,36 @@
 <%-- 
-    Document   : main
-    Created on : 21 Νοε 2017, 8:57:31 πμ
+    Document   : Delete_user
+    Created on : 28 Νοε 2017, 1:50:57 μμ
     Author     : evimouth
 --%>
-<%@page import="java.sql.*"%>
-<% Class.forName("com.mysql.jdbc.Driver"); %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+    <%@ page import="java.sql.*" %>
+    <% Class.forName("com.mysql.jdbc.Driver"); %>
+
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>USERS</title>
-        <style>
+        <title>Delete user!!</title>
+        
+        
+        
+<style>
+        .button 
+        {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+</style>
+<style>
                 #customers 
                 {
                     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -38,6 +56,7 @@
                     background-color: #4CAF50;
                     color: white;
                 }
+                
         </style>
         <style>
             a:link, a:visited 
@@ -56,11 +75,8 @@
                 background-color: red;
             }
         </style>
-
     </head>
-    <body>
-
-        <h1>USERS</h1>
+    
         <%!
             public class users_class
                 {
@@ -77,7 +93,7 @@
                                 {
                                     connection= DriverManager.getConnection(URL,USERNAME,PASSWORD);
                                     
-                                    prest = connection.prepareStatement("Select id,username,email from users");
+                                    prest = connection.prepareStatement("Select * from users");
                                     
                                 }
                             catch(SQLException e)
@@ -110,24 +126,46 @@
             ResultSet users = users_class.getusers();
             
         %>
-        <table id="customers" border="1">
-            <tbody>
-                <tr>
-                    <td>User id:</td>
-                    <td>Username:</td>
-                    <td>Email:</td>
-                </tr>
-                <% while(users.next())
-                    { %>
-                <tr>
-                    <td><%= users.getInt("id")%></td>
-                    <td><%= users.getString("username")%></td>
-                    <td><%= users.getString("email")%></td>
-                </tr>
-                <%}%>
-            </tbody>
-            <a href="main.jsp">Go back</a>
-            <a href="Deleteuser.jsp">Go delete a user</a>
-        </table>
-    </body>
-</html>
+    
+        <h1>USERS TABLE</h1>
+        
+        <%! String driverName = "com.mysql.jdbc.Driver";%>
+<%!String url = "jdbc:mysql://localhost:3306/record";%>
+<%!String user = "root";%>
+<%!String psw = "root";%>
+<%
+    String id = request.getParameter("id");
+    if(id != null)
+    {
+        Connection con = null;
+    PreparedStatement ps = null;
+    int personID = Integer.parseInt(id);
+    try
+    {
+        Class.forName(driverName);
+        con = DriverManager.getConnection(url,user,psw);
+        String sql = "DELETE FROM person WHERE personID="+personID;
+        ps = con.prepareStatement(sql);
+        int i = ps.executeUpdate();
+        if(i > 0)
+            {%>
+        <jsp:forward page="/users.jsp"/>
+        <% 
+            }
+            else
+        %>
+        <jsp:forward page="/failure.jsp"/>
+<% }
+
+catch(SQLException sqe)
+{
+request.setAttribute("error", sqe);
+out.println(sqe);
+}
+}
+%>
+    
+    
+        
+    
+

@@ -36,5 +36,8 @@
         <welcome-file>
             Display_User_from_username.jsp
         </welcome-file>
+        <welcome-file>
+            Display_Business_Not_Verified.jsp
+        </welcome-file>
     </welcome-file-list>
 </web-app>
