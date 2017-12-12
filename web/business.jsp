@@ -11,6 +11,26 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Business</title>
+<script>
+        function myFunction() {
+    var ID = document.getElementById("ID").value;
+ 
+
+     submitOK = "true";
+
+    if (ID.length >11 || inNaN(ID)  ) {
+        alert("The ID may have no more than 11 numbers");
+        submitOK = "false";
+    }
+    
+     if (submitOK === "false") {
+        return false;
+    }
+   
+
+
+}
+    </script>
         <style>
                 #customers 
                 {
@@ -63,7 +83,7 @@
             public class business_class
                 {
                     String URL ="jdbc:mysql://localhost:3306/goldenoffers_data";
-                   // String URL="jdbc:mysql://lorkas.ddns.net:8079/db_lorkas";
+                   
                     String USERNAME="manosm";
                     String PASSWORD="r678CKpFr1SuwAft";
                     Connection connection = null;
@@ -111,6 +131,7 @@
             ResultSet business = business_class.getbusiness();
             
         %>
+<form action="business.jsp" onSubmit="return myFunction();">
         <table id="customers" border="2">
             <tbody>
                 <tr>
@@ -142,8 +163,47 @@
                 <%}%>
             </tbody>
         </table>
-            
+<table id="customers">
+        <tr>
+            <td>Enter ID To Delete</td>
+            <td><input type="text" name="id" />
+                <input  type="submit" value="Delete"  /></td>
+                
+
+                
+        </tr>
+</table>
+</form>
+<%! String driverName = "com.mysql.jdbc.Driver";%>
+<%!String URL ="jdbc:mysql://localhost:3306/goldenoffers_data";%>
+<%! String USERNAME="manosm";%>
+<%!  String PASSWORD="r678CKpFr1SuwAft";%>
+
+<%
+            String id = request.getParameter("id");
+            if(id != null)
+                {
+                    Connection con = null;
+                    PreparedStatement ps = null;
+                    int idd = Integer.parseInt(id);
+            try
+                    {
+                        Class.forName("com.mysql.jdbc.Driver");
+                        con = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+                        String sql = "DELETE FROM business WHERE id="+idd;
+                        
+                        ps = con.prepareStatement(sql);
+                        int i = ps.executeUpdate();
+                        
+}
+                    
+                        catch(SQLException sqe)
+                            {
+                                sqe.printStackTrace();
+                            }
+                }               
+%>
             <a href="main.jsp">Go back</a>
-           
+            <a href="business.jsp">REFRESH</a>
     </body>
 </html>

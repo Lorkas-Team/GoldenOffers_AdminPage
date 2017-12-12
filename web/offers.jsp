@@ -13,6 +13,26 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>OFFERS</title>
+<script>
+    function myFunction() {
+    var ID = document.getElementById("ID").value;
+ 
+
+     submitOK = "true";
+
+    if (ID.length >11 || inNaN(ID)  ) {
+        alert("The ID may have no more than 11 numbers");
+        submitOK = "false";
+    }
+    
+     if (submitOK === "false") {
+        return false;
+    }
+   
+
+
+}
+</script>
         <style>
                 #customers 
                 {
@@ -109,6 +129,7 @@
             ResultSet OFFERS = OFFERS_class.getOFFERS();
             
         %>
+<form action="offers.jsp" onSubmit="return myFunction();">        
         <table id="customers" border="1">
             <tbody>
                 <tr>
@@ -137,6 +158,48 @@
                 <%}%>
             </tbody>
         </table>
+            <table id="customers">
+        <tr>
+            <td>Enter ID To Delete</td>
+            <td><input type="text" name="id" />
+                <input  type="submit" value="Delete"  /></td>
+                
+
+                
+        </tr>
+</table>
+</form>
+<%! String driverName = "com.mysql.jdbc.Driver";%>
+<%!String URL ="jdbc:mysql://localhost:3306/goldenoffers_data";%>
+<%! String USERNAME="manosm";%>
+<%!  String PASSWORD="r678CKpFr1SuwAft";%>
+
+<%
+            String id = request.getParameter("id");
+            if(id != null)
+                {
+                    Connection con = null;
+                    PreparedStatement ps = null;
+                    int idd = Integer.parseInt(id);
+            try
+                    {
+                        Class.forName("com.mysql.jdbc.Driver");
+                        con = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+                        String sql = "DELETE FROM offers WHERE id="+idd;
+                        
+                        ps = con.prepareStatement(sql);
+                        int i = ps.executeUpdate();
+                        
+}
+                    
+                        catch(SQLException sqe)
+                            {
+                                sqe.printStackTrace();
+                            }
+                }               
+%>
             <a href="main.jsp">Go back</a>
+            <a href="offers.jsp">REFRESH</a>
+            
     </body>
 </html>

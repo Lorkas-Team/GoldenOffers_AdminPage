@@ -12,6 +12,27 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>USERS</title>
+        <script>
+   function myFunction() {
+    var ID = document.getElementById("ID").value;
+   
+
+     submitOK = "true";
+
+    if (ID.length >11 || inNaN(ID)  ) {
+        alert("The ID may have no more than 11 numbers");
+        submitOK = "false";
+    }
+    
+     if (submitOK === "false") {
+        return false;
+    }
+   
+
+
+}
+</script>
+
         <style>
                 #customers 
                 {
@@ -58,8 +79,8 @@
         </style>
 
     </head>
+    
     <body>
-
         <h1>USERS</h1>
         <%!
             public class users_class
@@ -110,7 +131,8 @@
             ResultSet users = users_class.getusers();
             
         %>
-        <table id="customers" border="1">
+<form action="users.jsp" onSubmit="return myFunction();">
+            <table id="customers" border="1">
             <tbody>
                 <tr>
                     <td>User id:</td>
@@ -126,8 +148,52 @@
                 </tr>
                 <%}%>
             </tbody>
-            <a href="main.jsp">Go back</a>
-            <a href="Deleteuser.jsp">Go delete a user</a>
+            
+            
         </table>
-    </body>
+<table id="customers">
+        <tr>
+            <td>Enter ID To Delete</td>
+            <td><input  type="text" name="id" />
+                <input id="ID"  type="submit" value="Delete"  /></td>
+                
+
+                
+        </tr>
+</table>
+</form>
+                
+<%! String driverName = "com.mysql.jdbc.Driver";%>
+<%!String URL ="jdbc:mysql://localhost:3306/goldenoffers_data";%>
+<%! String USERNAME="manosm";%>
+<%!  String PASSWORD="r678CKpFr1SuwAft";%>
+
+<%
+            String id = request.getParameter("id");
+            if(id != null)
+                {
+                    Connection con = null;
+                    PreparedStatement ps = null;
+                    int id_u = Integer.parseInt(id);
+            try
+                    {
+                        Class.forName("com.mysql.jdbc.Driver");
+                        con = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+                        String sql = "DELETE FROM users WHERE id="+id_u;
+                        ps = con.prepareStatement(sql);
+                        int i = ps.executeUpdate();
+                        
+}
+                    
+                        catch(SQLException sqe)
+                            {
+                                sqe.printStackTrace();
+                            }
+                }               
+%>
+
+
+<a href="main.jsp">Go back</a>
+<a href="users.jsp">REFRESH</a>
+</body>
 </html>
