@@ -12,26 +12,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>USERS</title>
-        <script>
-   function myFunction() {
-    var ID = document.getElementById("ID").value;
-   
 
-     submitOK = "true";
-
-    if (ID.length >11 || inNaN(ID)  ) {
-        alert("The ID may have no more than 11 numbers");
-        submitOK = "false";
-    }
-    
-     if (submitOK === "false") {
-        return false;
-    }
-   
-
-
-}
-</script>
 
         <style>
                 #customers 
@@ -131,7 +112,7 @@
             ResultSet users = users_class.getusers();
             
         %>
-<form action="users.jsp" onSubmit="return myFunction();">
+<form action="users.jsp" >
             <table id="customers" border="1">
             <tbody>
                 <tr>
@@ -154,7 +135,10 @@
 <table id="customers">
         <tr>
             <td>Enter ID To Delete</td>
-            <td><input  type="text" name="id" />
+            <td><input 
+                       name="id" onkeyup="value=isNaN(parseFloat(value))||value<0||value>9999999999999999?value=null:value"
+                    type="number"
+                    value=""/>
                 <input id="ID"  type="submit" value="Delete"  /></td>
                 
 
@@ -182,7 +166,7 @@
                         String sql = "DELETE FROM users WHERE id="+id_u;
                         ps = con.prepareStatement(sql);
                         int i = ps.executeUpdate();
-                        
+                        response.sendRedirect("users.jsp");
 }
                     
                         catch(SQLException sqe)

@@ -11,26 +11,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Business</title>
-<script>
-        function myFunction() {
-    var ID = document.getElementById("ID").value;
- 
 
-     submitOK = "true";
-
-    if (ID.length >11 || inNaN(ID)  ) {
-        alert("The ID may have no more than 11 numbers");
-        submitOK = "false";
-    }
-    
-     if (submitOK === "false") {
-        return false;
-    }
-   
-
-
-}
-    </script>
         <style>
                 #customers 
                 {
@@ -127,11 +108,12 @@
                 }
         %>
         <%
+            
             business_class business_class= new business_class();
             ResultSet business = business_class.getbusiness();
-            
+            //<input id="ID"  type="submit" value="Delete" onClick="window.location.reload();"
         %>
-<form action="business.jsp" onSubmit="return myFunction();">
+        <form action="business.jsp"  >
         <table id="customers" border="2">
             <tbody>
                 <tr>
@@ -166,9 +148,14 @@
 <table id="customers">
         <tr>
             <td>Enter ID To Delete</td>
-            <td><input type="text" name="id" />
-                <input  type="submit" value="Delete"  /></td>
-                
+            
+            <td><input 
+                       name="id" onkeyup="value=isNaN(parseFloat(value))||value<0||value>9999999999999999?value=null:value"
+                    type="number"
+                    value=""/>
+                <input   type="submit" value="Delete" />
+                       </td>
+               
 
                 
         </tr>
@@ -194,7 +181,7 @@
                         
                         ps = con.prepareStatement(sql);
                         int i = ps.executeUpdate();
-                        
+                        response.sendRedirect("business.jsp");
 }
                     
                         catch(SQLException sqe)

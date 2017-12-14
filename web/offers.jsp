@@ -4,6 +4,10 @@
     Author     : evimouth
 --%>
 
+
+<%@page import="java.io.FileOutputStream"%>
+<%@page import="java.io.OutputStream"%>
+<%@page import="java.io.InputStream"%>
 <%@page import="java.sql.*"%>
 <% Class.forName("com.mysql.jdbc.Driver"); %>
 
@@ -13,26 +17,6 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>OFFERS</title>
-<script>
-    function myFunction() {
-    var ID = document.getElementById("ID").value;
- 
-
-     submitOK = "true";
-
-    if (ID.length >11 || inNaN(ID)  ) {
-        alert("The ID may have no more than 11 numbers");
-        submitOK = "false";
-    }
-    
-     if (submitOK === "false") {
-        return false;
-    }
-   
-
-
-}
-</script>
         <style>
                 #customers 
                 {
@@ -78,6 +62,7 @@
                 background-color: red;
             }
         </style>
+        
     </head>
     <body>
     
@@ -98,7 +83,7 @@
                                 {
                                     connection= DriverManager.getConnection(URL,USERNAME,PASSWORD);
                                     
-                                    prest = connection.prepareStatement("Select id,business_id,product_name,price,description,photo,regDate,expDate,business_name from offers");
+                                    prest = connection.prepareStatement("Select * from offers");
                                     
                                 }
                             catch(SQLException e)
@@ -129,16 +114,17 @@
             ResultSet OFFERS = OFFERS_class.getOFFERS();
             
         %>
-<form action="offers.jsp" onSubmit="return myFunction();">        
+<form action="offers.jsp" >        
         <table id="customers" border="1">
             <tbody>
                 <tr>
                     <td>id:</td>
                     <td>business_id:</td>
+                    <td>uid:</td>
                     <td>product_name:</td>
                     <td>price:</td>
                     <td>description:</td>
-                    <td>photo:</td>
+                    <td>image:</td>
                     <td>reqDate:</td>
                     <td>expDate:</td>
                     <td>business_name:</td>
@@ -148,10 +134,14 @@
                 <tr>
                     <td><%= OFFERS.getInt("id")%></td>
                     <td><%= OFFERS.getInt("business_id")%></td>
+                    <td><%= OFFERS.getInt("uid")%></td>
+                    <td><%= OFFERS.getString("product_name")%></td>
                     <td><%= OFFERS.getDouble("price")%></td>
                     <td><%= OFFERS.getString("description")%></td>
-                    <td><%= OFFERS.getBlob("photo")%></td>
-                    <td><%= OFFERS.getDate("reqDate")%></td>
+                    <td>
+                        <%= OFFERS.getBlob("image") %>
+                    </td>
+                    <td><%= OFFERS.getDate("regDate")%></td>
                     <td><%= OFFERS.getDate("expDate")%></td>
                     <td><%= OFFERS.getString("business_name")%></td>
                 </tr>
@@ -161,9 +151,13 @@
             <table id="customers">
         <tr>
             <td>Enter ID To Delete</td>
-            <td><input type="text" name="id" />
-                <input  type="submit" value="Delete"  /></td>
-                
+  
+            <td>
+                <input 
+                       name="id" onkeyup="value=isNaN(parseFloat(value))||value<0||value>9999999999999999?value=null:value"
+                    type="number"
+                    value=""/>
+                <input  type="submit" value="Delete" /></td>
 
                 
         </tr>
@@ -189,7 +183,7 @@
                         
                         ps = con.prepareStatement(sql);
                         int i = ps.executeUpdate();
-                        
+                        response.sendRedirect("offers.jsp");
 }
                     
                         catch(SQLException sqe)
@@ -203,3 +197,5 @@
             
     </body>
 </html>
+
+

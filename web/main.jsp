@@ -30,7 +30,7 @@
     </head>
     <body>
         <center>
-            <h1>Hello There!</h1>
+            <h1>GOLDEN_OFFERS_ADMIN_PAGE</h1>
             <ul>
                 <a href="users.jsp">Users view</a>
                  <a href="business.jsp">Business view</a>
@@ -38,6 +38,7 @@
                   <a href="SelectSpecific.jsp">Search Business from AFM </a>
                   <a href="SelectSpecific_user.jsp">Search Users from username </a>
                   <a href="Display_Business_Not_Verified.jsp">Business where not verified</a>
+                  <a href="desires.jsp">Desires view </a>
             </ul>  
 
         </center>

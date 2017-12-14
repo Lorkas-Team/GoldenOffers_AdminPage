@@ -10,7 +10,7 @@
     <head>
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Business</title>
+        <title>SELECT A SPECIFIC AFM</title>
 <script>
    function myFunction() {
     var AFM = document.getElementById("AFM").value;
