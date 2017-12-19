@@ -4,8 +4,7 @@
     Author     : evimouth
 --%>
 
-
-<%@page import="java.io.FileOutputStream"%>
+<%@page import="java.util.Base64"%>
 <%@page import="java.io.OutputStream"%>
 <%@page import="java.io.InputStream"%>
 <%@page import="java.sql.*"%>
@@ -61,6 +60,14 @@
             {
                 background-color: red;
             }
+            #photo
+{
+    padding: 0px;
+    vertical-align: middle;
+    text-align: center;
+    width: 50px;
+    height: 50px;
+}
         </style>
         
     </head>
@@ -107,15 +114,14 @@
                         
                         return res;
                     }
-                }
         %>
         <%
             OFFERS_class OFFERS_class= new OFFERS_class();
-            ResultSet OFFERS = OFFERS_class.getOFFERS();
-            
+            ResultSet OFFERS = OFFERS_class.getOFFERS();  
         %>
 <form action="offers.jsp" >        
-        <table id="customers" border="1">
+            
+    <table id="customers">
             <tbody>
                 <tr>
                     <td>id:</td>
@@ -127,10 +133,15 @@
                     <td>image:</td>
                     <td>reqDate:</td>
                     <td>expDate:</td>
-                    <td>business_name:</td>
+                    <td>business_name:</td>                 
                 </tr>
+            
                 <% while(OFFERS.next())
-                    { %>
+                    { byte[] imgData = OFFERS.getBytes("image"); // blob field 
+           
+             String encode = Base64.getEncoder().encodeToString(imgData);
+            request.setAttribute("imgBase", encode);
+                %>
                 <tr>
                     <td><%= OFFERS.getInt("id")%></td>
                     <td><%= OFFERS.getInt("business_id")%></td>
@@ -139,15 +150,16 @@
                     <td><%= OFFERS.getDouble("price")%></td>
                     <td><%= OFFERS.getString("description")%></td>
                     <td>
-                        <%= OFFERS.getBlob("image") %>
+                        <img id="photo" src="data:image/jpeg;base64,${imgBase}" />
                     </td>
+          
                     <td><%= OFFERS.getDate("regDate")%></td>
                     <td><%= OFFERS.getDate("expDate")%></td>
                     <td><%= OFFERS.getString("business_name")%></td>
-                </tr>
-                <%}%>
+                </tr>              
+                <%}%>           
             </tbody>
-        </table>
+</table>    
             <table id="customers">
         <tr>
             <td>Enter ID To Delete</td>
@@ -192,6 +204,7 @@
                             }
                 }               
 %>
+
             <a href="main.jsp">Go back</a>
             <a href="offers.jsp">REFRESH</a>
             
