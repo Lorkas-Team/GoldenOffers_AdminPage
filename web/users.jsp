@@ -139,7 +139,7 @@
                        name="id" onkeyup="value=isNaN(parseFloat(value))||value<0||value>9999999999999999?value=null:value"
                     type="number"
                     value=""/>
-                <input id="ID"  type="submit" value="Delete"  /></td>
+                <input   type="submit" value="Delete"  /></td>
                 
 
                 

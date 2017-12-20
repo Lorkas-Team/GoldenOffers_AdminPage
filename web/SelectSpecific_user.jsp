@@ -3,7 +3,8 @@
     Created on : 22 Νοε 2017, 5:18:22 πμ
     Author     : evimouth
 --%>
-
+<%@page import="java.sql.*"%>
+<% Class.forName("com.mysql.jdbc.Driver"); %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -14,17 +15,17 @@
                          <script>
   
 function myFunction() {
-    var usename = document.getElementById("usename").value;
+    var id = document.getElementById("id").value;
     
     submitOK = "true";
 
-    if (usename.length > 20) {
-        alert("The username may have no more than 20 characters");
+    if (id.length > 11) {
+        alert("The id may have no more than 11 characters");
         submitOK = "false";
     } 
-    if(usename === "")
+    if(id === "")
     {
-        alert("The username must not be null");
+        alert("The id must not be null");
         submitOK = "false";
     }
      if (submitOK === "false") {
@@ -32,6 +33,34 @@ function myFunction() {
     }
 }
 </script>
+       
+           <style>
+                #customers 
+                {
+                    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+                    border-collapse: collapse;
+                    width: 100%;
+                }
+
+                #customers td, #customers th 
+                {
+                    border: 1px solid #ddd;
+                    padding: 8px;
+                }
+
+                #customers tr:nth-child(even){background-color: #f2f2f2;}
+
+                #customers tr:hover {background-color: #ddd;}
+
+                #customers th 
+                {
+                    padding-top: 12px;
+                    padding-bottom: 12px;
+                    text-align: left;
+                    background-color: #4CAF50;
+                    color: white;
+                }
+        </style>
         <style>
             a:link, a:visited 
             {
@@ -49,6 +78,7 @@ function myFunction() {
                 background-color: red;
             }
         </style>
+        </style>
         <style>
 .button {
     background-color: #4CAF50;
@@ -65,17 +95,84 @@ function myFunction() {
 </style>
     </head>
     <body>
-        
-        <h1>Search users by username</h1>
+        <%!
+            public class users_class
+                {
+                    String URL ="jdbc:mysql://localhost:3306/goldenoffers_data";
+                    String USERNAME="manosm";
+                    String PASSWORD="r678CKpFr1SuwAft";
+                    Connection connection = null;
+                    PreparedStatement prest = null;
+                    ResultSet res = null;
+                    
+                    public users_class()
+                        {
+                            try
+                                {
+                                    connection= DriverManager.getConnection(URL,USERNAME,PASSWORD);
+                                    
+                                    prest = connection.prepareStatement("Select id,username,email from users");
+                                    
+                                }
+                            catch(SQLException e)
+                            {
+                                e.printStackTrace();
+                            }
+                            
+                        }
+                        
+                    public ResultSet getusers()
+                    {
+                        try
+                                {
+                                    res= prest.executeQuery();
+                                    
+                                    
+                                }
+                            catch(SQLException e)
+                            {
+                                e.printStackTrace();
+                            }
+                        
+                        return res;
+                    }
+                    
+                }
+        %>
+        <%
+            users_class users_class= new users_class();
+            ResultSet users = users_class.getusers();
+            
+        %>
+        <h1>Select a user by id</h1>
         <form name="myform" action="Display_User_from_username.jsp" method="POST" onSubmit="return myFunction();">
+        <table id="customers" border="1">
+            <tbody>
+                <tr>
+                    <td>User id:</td>
+                    <td>Username:</td>
+                    <td>Email:</td>
+                </tr>
+                <% while(users.next())
+                    { %>
+                <tr>
+                    <td><%= users.getInt("id")%></td>
+                    <td><%= users.getString("username")%></td>
+                    <td><%= users.getString("email")%></td>
+                </tr>
+                <%}%>
+            </tbody>
+            
+            
+        </table>    
         <div class="w3-container">
             <table class="w3-table-all w3-centered">
             
             <tbody>
                 <tr>
                     <td>
-                        <span class="w3-tag">USERNAME :</span>
-                         <input id="usename" type="text" name="username" value="" />
+                        <span class="w3-tag">Put id :</span>
+                         <input id="id" type="text" name="id" value="" />
                     </td>
                 
                 </tr>

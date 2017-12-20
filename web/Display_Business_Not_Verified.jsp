@@ -12,7 +12,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Business where not Verified</title>
         
         <style>
                 #customers 
@@ -83,7 +83,7 @@
                                             "Select id,unique_id,email,created_at,updated_at,name,owner,afm,verified from business WHERE verified like 0 ORDER BY id "
 
                                         );
-                                    
+                                   
                                 }
                             catch(SQLException e)
                             {

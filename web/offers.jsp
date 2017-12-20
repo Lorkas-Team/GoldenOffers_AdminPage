@@ -179,8 +179,8 @@
 <%!String URL ="jdbc:mysql://localhost:3306/goldenoffers_data";%>
 <%! String USERNAME="manosm";%>
 <%!  String PASSWORD="r678CKpFr1SuwAft";%>
-
 <%
+    
             String id = request.getParameter("id");
             if(id != null)
                 {
