@@ -114,6 +114,7 @@
                         
                         return res;
                     }
+                   }
         %>
         <%
             OFFERS_class OFFERS_class= new OFFERS_class();
@@ -145,7 +146,7 @@
                 <tr>
                     <td><%= OFFERS.getInt("id")%></td>
                     <td><%= OFFERS.getInt("business_id")%></td>
-                    <td><%= OFFERS.getInt("uid")%></td>
+                    <td><%= OFFERS.getString("uid")%></td>
                     <td><%= OFFERS.getString("product_name")%></td>
                     <td><%= OFFERS.getDouble("price")%></td>
                     <td><%= OFFERS.getString("description")%></td>
@@ -175,10 +176,10 @@
         </tr>
 </table>
 </form>
-<%! String driverName = "com.mysql.jdbc.Driver";%>
-<%!String URL ="jdbc:mysql://localhost:3306/goldenoffers_data";%>
-<%! String USERNAME="manosm";%>
-<%!  String PASSWORD="r678CKpFr1SuwAft";%>
+<%! String driverName = "com.mysql.jdbc.Driver"; %>
+<%! String URL ="jdbc:mysql://localhost:3306/goldenoffers_data"; %>
+<%! String USERNAME="manosm"; %>
+<%!  String PASSWORD="r678CKpFr1SuwAft"; %>
 <%
     
             String id = request.getParameter("id");
